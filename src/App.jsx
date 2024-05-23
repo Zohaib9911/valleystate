@@ -5,12 +5,14 @@ import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
 import ForgetPassword from "./Pages/ForgetPassword";
 import Offers from "./Pages/Offers";
+import SiteHeader from "./Components/SiteHeader";
 
 function App() {
 
   return (
     <>
       <Router>
+        <SiteHeader />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
