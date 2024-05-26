@@ -9,6 +9,7 @@ import SiteHeader from "./Components/SiteHeader";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PrivateRoute from "./Components/PrivateRoute";
+import CreateListing from "./Pages/CreateListing";
 
 function App() {
 
@@ -21,8 +22,9 @@ function App() {
 
           <Route path="/profile" element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
-          </Route>
 
+          </Route>
+          <Route path="/create-listing" element={<CreateListing />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forget-password" element={<ForgetPassword />} />

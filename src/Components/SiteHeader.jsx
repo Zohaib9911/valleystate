@@ -17,7 +17,7 @@ export default function SiteHeader() {
     })
   }, [auth])
   const pathMatchRoute = (route) => {
-    console.log(route)
+
     if (route === location.pathname) {
       return true;
     }
@@ -48,10 +48,12 @@ export default function SiteHeader() {
             >
               Offers
             </li>
-            <li
-              className={` cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${(pathMatchRoute('/sign-in') || pathMatchRoute('/profile')) && " text-black border-b-red-600"}`}
-              onClick={() => navigate('/profile')}
-            >{pagestate}</li>
+
+            <li className={` cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${(pathMatchRoute("/sign-in") || pathMatchRoute("/profile")) && "text-black border-b-red-500"}`}
+              onClick={() => navigate("/profile")}
+            >
+              {pagestate}
+            </li>
           </ul>
         </div>
       </header>
