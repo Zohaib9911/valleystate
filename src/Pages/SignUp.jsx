@@ -20,11 +20,11 @@ export default function SignUp() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    username: ""
+    name: ""
   });
 
 
-  const { email, password, username } = formData;
+  const { email, password, name } = formData;
   const navigate = useNavigate();
 
   const onChange = (e) => {
@@ -73,8 +73,8 @@ export default function SignUp() {
         <div className=' w-full md:w-[67%] lg:w-[40%] lg:ml-20'>
           <form onSubmit={handleSubmit}>
             <input type="text"
-              id='username'
-              value={username}
+              id='name'
+              value={name}
               onChange={onChange}
               placeholder='User Name'
               className=' mb-6 w-full px-4 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out'

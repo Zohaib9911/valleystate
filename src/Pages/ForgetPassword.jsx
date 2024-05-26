@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router';
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 import OAuth from '../Components/OAuth';
+import { toast } from 'react-toastify';
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
 
 export default function ForgetPassword() {
@@ -16,6 +18,17 @@ export default function ForgetPassword() {
     setEmail(e.target.value)
   }
 
+  const handleForget = async (e) => {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      await sendPasswordResetEmail(auth, email);
+      toast.success('Email sent');
+    } catch (error) {
+      toast.error("Please enter valid email")
+    }
+  }
+
 
   return (
     <section>
@@ -25,7 +38,7 @@ export default function ForgetPassword() {
           <img src="https://images.unsplash.com/flagged/photo-1564767609342-620cb19b2357?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1373&q=80" alt="Key of site" />
         </div>
         <div className=' w-full md:w-[67%] lg:w-[40%] lg:ml-20'>
-          <form >
+          <form onSubmit={handleForget}>
             <input type="email"
               id='email'
               value={email}
