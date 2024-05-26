@@ -45,7 +45,7 @@ export default function SignUp() {
       );
 
       updateProfile(auth.currentUser, {
-        displayName: username,
+        displayName: name,
       })
       const user = userCredential.user
       const formDataCopy = { ...formData };
