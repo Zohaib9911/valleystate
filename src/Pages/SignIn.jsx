@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router';
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 import OAuth from '../Components/OAuth';
+import { toast } from 'react-toastify';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 
 export default function SignIn() {
@@ -22,6 +24,22 @@ export default function SignIn() {
       [e.target.id]: e.target.value,
     }))
   }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      if (userCredential.user) {
+        navigate('/');
+      }
+    } catch (error) {
+      toast.error("invalid Credentaials ")
+    }
+  }
 
 
   return (
@@ -32,7 +50,7 @@ export default function SignIn() {
           <img src="https://images.unsplash.com/flagged/photo-1564767609342-620cb19b2357?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1373&q=80" alt="Key of site" />
         </div>
         <div className=' w-full md:w-[67%] lg:w-[40%] lg:ml-20'>
-          <form >
+          <form onSubmit={handleSubmit}>
             <input type="email"
               id='email'
               value={email}
