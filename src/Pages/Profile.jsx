@@ -85,7 +85,7 @@ export default function Profile() {
             </div>
           </form>
           <button
-            className=' w-full bg-blue-600 text-white uppercase px-7 py-3 text-sm font-medium rounded shadow-md hover:bg-blue-700 transition duration-150 ease-in-out hover: shadow-lg active:bg-blue-800'
+            className=' w-full bg-blue-600 text-white uppercase px-7 py-3 text-sm font-medium rounded shadow-md hover:bg-blue-700 transition duration-150 ease-in-out hover:shadow-lg active:bg-blue-800'
             type='submit'
           >
             <Link to='/create-listing'
