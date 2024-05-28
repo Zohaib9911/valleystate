@@ -1,20 +1,24 @@
 import { getAuth, updateProfile } from 'firebase/auth'
-import { doc, updateDoc } from 'firebase/firestore';
-import React, { useState } from 'react'
+import { collection, doc, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { db } from '../firebase';
 import { FcHome } from "react-icons/fc";
+import ListingItems from '../Components/ListingItems';
 
 export default function Profile() {
   const auth = getAuth();
   const navigate = useNavigate();
   const [changeDetail, setChangeDetail] = useState(false);
+  const [loading, setLoading] = useState(true)
+  const [listing, setListing] = useState(null);
   const [formData, setFormData] = useState({
     name: auth.currentUser.displayName,
     email: auth.currentUser.email
   })
   const { name, email } = formData;
+  console.log(listing)
 
   const handleLogOut = () => {
     auth.signOut();
@@ -44,6 +48,33 @@ export default function Profile() {
     } catch (error) {
       toast.error("Error While updating")
     }
+  }
+  useEffect(() => {
+    const fetchUserListings = async () => {
+      const listingRef = collection(db, "listings");
+      const q = query(listingRef, where("userRef", "==", auth.currentUser.uid),
+        orderBy("timestamp", "desc")
+      )
+      const querySnap = await getDocs(q);
+      let listings = [];
+      querySnap.forEach((doc) => {
+        return listings.push({
+          id: doc.id,
+          data: doc.data()
+        });
+      });
+      setListing(listings)
+      setLoading(false)
+    }
+    fetchUserListings()
+  }, [auth.currentUser.uid])
+
+  const handleDelete = () => {
+
+  };
+
+  const handleEdit = () => {
+
   }
 
   return (
@@ -97,6 +128,30 @@ export default function Profile() {
           </button>
         </div>
       </section>
+      <div className=' max-w-6xl px-3 mt-6 mx-auto'>
+        {
+          !loading && listing.length > 0 && (
+            <>
+              <h2 className=' text-2xl text-center font-semibold mb-6'>
+                My Listings
+              </h2>
+              <ul className=' sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5'>
+                {
+                  listing.map((item) => (
+                    <ListingItems
+                      key={item.id}
+                      id={item.id}
+                      listing={item.data}
+                      onDelete={() => handleDelete(item.id)}
+                      onEdit={() => handleEdit(item.id)}
+                    />
+                  ))
+                }
+              </ul>
+            </>
+          )
+        }
+      </div>
     </>
   )
 }
