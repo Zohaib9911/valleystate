@@ -107,6 +107,7 @@ export default function CreateListing() {
 
     const storeImage = async (image) => {
       return new Promise((resolve, reject) => {
+        setLoading(true)
         const storage = getStorage();
         const fileName = `${auth.currentUser.uid}-${image.name}-${new Date().getTime()}`
         const storageRef = ref(storage, fileName);
@@ -115,6 +116,7 @@ export default function CreateListing() {
           "state_changed",
           (snapshot) => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setLoading(true)
             console.log("Upload Is" + progress.toFixed(0) + "% done");
             // switch (snapshot.state) {
             //   case "paused":
